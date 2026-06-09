@@ -1,0 +1,1614 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blue Legend Club — BHS Property</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&family=Barlow+Condensed:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0a1628;
+    --navy2: #0d1f3c;
+    --navy3: #132747;
+    --blue: #1a4a8a;
+    --cyan: #00c3ff;
+    --cyan2: #0090d4;
+    --gold: #f0a800;
+    --gold2: #c98a00;
+    --white: #ffffff;
+    --text-main: #e8f4ff;
+    --text-muted: #7aa3c8;
+    --border: rgba(0,195,255,0.15);
+    --border-gold: rgba(240,168,0,0.3);
+    --card-bg: rgba(13,31,60,0.8);
+    --card-border: rgba(0,195,255,0.2);
+    --success: #22c55e;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+  }
+
+  body {
+    font-family: 'Barlow', sans-serif;
+    background: var(--navy);
+    color: var(--text-main);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* BG subtle grid */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,195,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,195,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* HEADER */
+  header {
+    position: relative;
+    z-index: 10;
+    background: var(--navy2);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .logo-icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .logo-text {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 20px;
+    letter-spacing: 1px;
+    color: var(--white);
+  }
+
+  .logo-text span { color: var(--cyan); }
+
+  .header-tag {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+
+  /* NAV TABS */
+  nav {
+    position: relative;
+    z-index: 10;
+    background: var(--navy2);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 0;
+    padding: 0 2rem;
+    overflow-x: auto;
+  }
+
+  nav button {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-family: 'Barlow', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    padding: 12px 20px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+    text-transform: uppercase;
+  }
+
+  nav button:hover { color: var(--cyan); }
+  nav button.active {
+    color: var(--cyan);
+    border-bottom-color: var(--cyan);
+  }
+
+  /* MAIN */
+  main {
+    position: relative;
+    z-index: 1;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  /* SECTIONS */
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* PAGE HERO */
+  .page-hero {
+    margin-bottom: 2rem;
+  }
+
+  .page-hero h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+
+  .page-hero h1 span { color: var(--cyan); }
+
+  .page-hero p {
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+
+  /* STATS ROW */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin-bottom: 2rem;
+  }
+
+  .stat-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .stat-card.gold-border { border-color: var(--border-gold); }
+
+  .stat-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+
+  .stat-value {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--white);
+    line-height: 1;
+  }
+
+  .stat-value.cyan { color: var(--cyan); }
+  .stat-value.gold { color: var(--gold); }
+
+  .stat-sub {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  /* MEMBER TABLE */
+  .table-wrap {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .table-toolbar {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .table-toolbar h2 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--white);
+    flex: 1;
+  }
+
+  .search-input {
+    background: rgba(0,195,255,0.06);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text-main);
+    font-family: 'Barlow', sans-serif;
+    font-size: 13px;
+    padding: 6px 12px;
+    width: 200px;
+    outline: none;
+  }
+
+  .search-input:focus { border-color: var(--cyan); }
+  .search-input::placeholder { color: var(--text-muted); }
+
+  select.filter-select {
+    background: rgba(0,195,255,0.06);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text-main);
+    font-family: 'Barlow', sans-serif;
+    font-size: 13px;
+    padding: 6px 10px;
+    outline: none;
+    cursor: pointer;
+  }
+
+  .btn-primary {
+    background: var(--cyan);
+    color: var(--navy);
+    border: none;
+    border-radius: 6px;
+    font-family: 'Barlow', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 7px 16px;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    transition: opacity 0.2s;
+  }
+
+  .btn-primary:hover { opacity: 0.85; }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-family: 'Barlow', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 6px 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .btn-ghost:hover { color: var(--cyan); border-color: rgba(0,195,255,0.4); }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  th {
+    padding: 10px 16px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    background: rgba(0,0,0,0.2);
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+
+  td {
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(0,195,255,0.06);
+    vertical-align: middle;
+  }
+
+  tr:last-child td { border-bottom: none; }
+
+  tr:hover td { background: rgba(0,195,255,0.04); }
+
+  .member-name {
+    font-weight: 600;
+    color: var(--white);
+  }
+
+  .member-id {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  /* BADGES */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 10px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .badge-official {
+    background: rgba(0,195,255,0.12);
+    color: var(--cyan);
+    border: 1px solid rgba(0,195,255,0.3);
+  }
+
+  .badge-potential {
+    background: rgba(240,168,0,0.12);
+    color: var(--gold);
+    border: 1px solid rgba(240,168,0,0.3);
+  }
+
+  .badge-reserve {
+    background: rgba(120,130,155,0.12);
+    color: #8899bb;
+    border: 1px solid rgba(120,130,155,0.2);
+  }
+
+  .badge-active {
+    background: rgba(34,197,94,0.1);
+    color: #4ade80;
+    border: 1px solid rgba(34,197,94,0.2);
+  }
+
+  .badge-warning {
+    background: rgba(245,158,11,0.1);
+    color: #fbbf24;
+    border: 1px solid rgba(245,158,11,0.2);
+  }
+
+  /* RANKING MEDAL */
+  .rank-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    font-size: 12px;
+    font-weight: 800;
+  }
+
+  .rank-1 { background: #f0a800; color: #3d2800; }
+  .rank-2 { background: #9ca3af; color: #1f2937; }
+  .rank-3 { background: #cd7c3a; color: #2d1700; }
+  .rank-n { background: rgba(255,255,255,0.08); color: var(--text-muted); }
+
+  /* PROGRESS BAR */
+  .progress-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .progress-bar {
+    flex: 1;
+    height: 6px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 3px;
+    overflow: hidden;
+    min-width: 60px;
+  }
+
+  .progress-fill {
+    height: 100%;
+    border-radius: 3px;
+    background: var(--cyan);
+    transition: width 0.4s ease;
+  }
+
+  .progress-fill.gold { background: var(--gold); }
+
+  .progress-pct {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-muted);
+    min-width: 34px;
+    text-align: right;
+  }
+
+  /* === ELIGIBILITY CHECKER === */
+  .checker-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 720px) {
+    .checker-grid { grid-template-columns: 1fr; }
+  }
+
+  .checker-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 1.5rem;
+  }
+
+  .checker-card h3 {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 1.25rem;
+  }
+
+  .form-row {
+    margin-bottom: 1rem;
+  }
+
+  .form-row label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .form-row input,
+  .form-row select {
+    width: 100%;
+    background: rgba(0,195,255,0.05);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text-main);
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px;
+    padding: 9px 12px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .form-row input:focus,
+  .form-row select:focus { border-color: var(--cyan); }
+
+  .form-row select option { background: var(--navy2); }
+
+  .check-toggle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+    cursor: pointer;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .check-toggle:last-child { border-bottom: none; }
+
+  .check-toggle input[type=checkbox] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--cyan);
+    cursor: pointer;
+  }
+
+  .check-toggle span {
+    font-size: 13px;
+    color: var(--text-main);
+    flex: 1;
+  }
+
+  /* RESULT PANEL */
+  .result-panel {
+    margin-top: 1.25rem;
+    border-radius: 10px;
+    padding: 1.25rem;
+    border: 1px solid;
+    display: none;
+  }
+
+  .result-panel.show { display: block; }
+  .result-panel.eligible {
+    background: rgba(0,195,255,0.08);
+    border-color: rgba(0,195,255,0.3);
+  }
+
+  .result-panel.eligible-gold {
+    background: rgba(240,168,0,0.08);
+    border-color: rgba(240,168,0,0.3);
+  }
+
+  .result-panel.not-eligible {
+    background: rgba(239,68,68,0.06);
+    border-color: rgba(239,68,68,0.25);
+  }
+
+  .result-panel .result-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    margin-bottom: 6px;
+  }
+
+  .result-panel .result-title.cyan { color: var(--cyan); }
+  .result-panel .result-title.gold { color: var(--gold); }
+  .result-panel .result-title.red { color: #f87171; }
+
+  .result-panel .result-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .criteria-list {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .criteria-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+  }
+
+  .criteria-item .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .dot-ok { background: var(--success); }
+  .dot-fail { background: var(--danger); }
+
+  /* === BENEFITS SECTION === */
+  .benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .benefit-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 1.25rem;
+    display: flex;
+    gap: 14px;
+  }
+
+  .benefit-card.gold-accent { border-color: var(--border-gold); }
+
+  .benefit-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: rgba(0,195,255,0.1);
+    border: 1px solid rgba(0,195,255,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 20px;
+  }
+
+  .benefit-icon.gold-icon {
+    background: rgba(240,168,0,0.1);
+    border-color: rgba(240,168,0,0.25);
+  }
+
+  .benefit-content h4 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+
+  .benefit-content p {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .tier-label {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-top: 6px;
+  }
+
+  .tier-both { background: rgba(0,195,255,0.1); color: var(--cyan); }
+  .tier-official { background: rgba(0,195,255,0.15); color: var(--cyan); }
+  .tier-potential { background: rgba(240,168,0,0.12); color: var(--gold); }
+
+  /* === MODAL === */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    z-index: 100;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: var(--navy2);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    width: 100%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .modal-header {
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .modal-header h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--white);
+  }
+
+  .modal-close {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 20px;
+    cursor: pointer;
+    line-height: 1;
+    padding: 2px;
+    transition: color 0.2s;
+  }
+
+  .modal-close:hover { color: var(--white); }
+
+  .modal-body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .modal-footer {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+
+  /* LEADERBOARD */
+  .leaderboard-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(0,195,255,0.06);
+    transition: background 0.15s;
+  }
+
+  .leaderboard-row:last-child { border-bottom: none; }
+  .leaderboard-row:hover { background: rgba(0,195,255,0.04); }
+
+  .lb-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--blue);
+    border: 1px solid rgba(0,195,255,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--cyan);
+    flex-shrink: 0;
+  }
+
+  .lb-info { flex: 1; min-width: 0; }
+
+  .lb-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--white);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .lb-dept {
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  .lb-score {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--white);
+    text-align: right;
+  }
+
+  .lb-score small {
+    display: block;
+    font-family: 'Barlow', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  /* TIMELINE */
+  .timeline {
+    position: relative;
+    padding-left: 2rem;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 7px;
+    top: 6px;
+    bottom: 6px;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--cyan), rgba(0,195,255,0.1));
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 1.5rem;
+  }
+
+  .timeline-dot {
+    position: absolute;
+    left: -1.75rem;
+    top: 4px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--navy2);
+    border: 2px solid var(--cyan);
+    z-index: 1;
+  }
+
+  .timeline-dot.gold { border-color: var(--gold); }
+  .timeline-dot.filled { background: var(--cyan); }
+
+  .timeline-date {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--cyan);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .timeline-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 3px;
+  }
+
+  .timeline-desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  /* TOAST */
+  .toast {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: var(--navy2);
+    border: 1px solid var(--cyan);
+    border-radius: 10px;
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--white);
+    z-index: 200;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.3s ease;
+    max-width: 320px;
+  }
+
+  .toast.show {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  /* EMPTY STATE */
+  .empty-state {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--text-muted);
+  }
+
+  .empty-state .empty-icon { font-size: 40px; margin-bottom: 10px; opacity: 0.3; }
+  .empty-state p { font-size: 14px; }
+
+  /* GLOW LINE ACCENT */
+  .section-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+    margin: 2rem 0;
+    opacity: 0.3;
+  }
+
+  /* WELCOME BANNER */
+  .welcome-banner {
+    background: linear-gradient(135deg, rgba(0,195,255,0.08), rgba(26,74,138,0.2));
+    border: 1px solid rgba(0,195,255,0.2);
+    border-radius: 14px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .welcome-text { flex: 1; min-width: 200px; }
+
+  .welcome-text h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--white);
+    margin-bottom: 6px;
+    letter-spacing: 0.5px;
+  }
+
+  .welcome-text h2 span { color: var(--cyan); }
+
+  .welcome-text p {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .welcome-logo {
+    opacity: 0.15;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 80px;
+    font-weight: 800;
+    color: var(--cyan);
+    line-height: 1;
+    user-select: none;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    main { padding: 1rem; }
+    header { padding: 0 1rem; }
+    nav { padding: 0 1rem; }
+    .stats-row { grid-template-columns: 1fr 1fr; }
+    .welcome-logo { display: none; }
+  }
+
+  /* Number animation */
+  @keyframes countUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  .stat-value { animation: countUp 0.5s ease forwards; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <svg class="logo-icon" viewBox="0 0 36 36" fill="none">
+      <path d="M18 3L32 28H4L18 3Z" fill="none" stroke="#00c3ff" stroke-width="2.5"/>
+      <path d="M12 28L18 16L24 28" fill="none" stroke="#ffffff" stroke-width="2" opacity="0.7"/>
+    </svg>
+    <div>
+      <div class="logo-text">BLUE <span>LEGEND</span></div>
+      <div style="font-size:10px;color:var(--text-muted);letter-spacing:1.5px;text-transform:uppercase;">BHS Property Club</div>
+    </div>
+  </div>
+  <div class="header-tag">Super Sales Club · Hà Nội · 2026</div>
+</header>
+
+<nav id="mainNav">
+  <button class="active" onclick="switchTab('dashboard')">Tổng quan</button>
+  <button onclick="switchTab('members')">Thành viên</button>
+  <button onclick="switchTab('checker')">Kiểm tra điều kiện</button>
+  <button onclick="switchTab('benefits')">Quyền lợi</button>
+  <button onclick="switchTab('leaderboard')">Bảng xếp hạng</button>
+  <button onclick="switchTab('roadmap')">Lộ trình</button>
+</nav>
+
+<main>
+
+  <!-- DASHBOARD -->
+  <section id="dashboard" class="section active">
+    <div class="welcome-banner">
+      <div class="welcome-text">
+        <h2>WELCOME TO <span>BLUE LEGEND</span></h2>
+        <p>Câu lạc bộ dành cho Super Sales xuất sắc nhất của BHS Property. <br>Cùng nhau chinh phục đỉnh cao — <em>United to Reach the Peak.</em></p>
+      </div>
+      <div class="welcome-logo">BL</div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-label">Tổng thành viên</div>
+        <div class="stat-value cyan" id="statTotal">0</div>
+        <div class="stat-sub">Tất cả cấp bậc</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Thành viên chính thức</div>
+        <div class="stat-value" id="statOfficial">0</div>
+        <div class="stat-sub">L1 &amp; TPKD</div>
+      </div>
+      <div class="stat-card gold-border">
+        <div class="stat-label">Thành viên tiềm năng</div>
+        <div class="stat-value gold" id="statPotential">0</div>
+        <div class="stat-sub">L2 &amp; L3</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Thành viên dự bị</div>
+        <div class="stat-value" style="color:#8899bb;" id="statReserve">0</div>
+        <div class="stat-sub">Đang theo dõi</div>
+      </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:2rem;" id="dashboardGrid">
+
+      <!-- Top performers -->
+      <div class="table-wrap">
+        <div class="table-toolbar">
+          <h2>🏆 Top Performers tháng này</h2>
+        </div>
+        <div id="topPerformersContainer"></div>
+      </div>
+
+      <!-- Recent activity -->
+      <div class="table-wrap">
+        <div class="table-toolbar">
+          <h2>📋 Hoạt động gần đây</h2>
+        </div>
+        <div style="padding:1rem 1.5rem;">
+          <div class="timeline" id="activityTimeline"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <div class="table-toolbar">
+        <h2>⚠️ Cảnh báo — Sắp hết hạn hoạt động</h2>
+      </div>
+      <div id="warningContainer"></div>
+    </div>
+  </section>
+
+  <!-- MEMBERS -->
+  <section id="members" class="section">
+    <div class="page-hero">
+      <h1>Danh sách <span>Thành Viên</span></h1>
+      <p>Quản lý toàn bộ thành viên CLB Blue Legend</p>
+    </div>
+
+    <div class="table-wrap">
+      <div class="table-toolbar">
+        <h2>Tất cả thành viên</h2>
+        <input class="search-input" type="text" id="memberSearch" placeholder="Tìm theo tên, mã NV..." oninput="filterMembers()">
+        <select class="filter-select" id="tierFilter" onchange="filterMembers()">
+          <option value="">Tất cả cấp bậc</option>
+          <option value="official">Chính thức</option>
+          <option value="potential">Tiềm năng</option>
+          <option value="reserve">Dự bị</option>
+        </select>
+        <button class="btn-primary" onclick="openAddModal()">+ Thêm thành viên</button>
+      </div>
+      <div style="overflow-x:auto;">
+        <table>
+          <thead>
+            <tr>
+              <th>Thành viên</th>
+              <th>Cấp bậc</th>
+              <th>Hiệu suất</th>
+              <th>Giao dịch gần nhất</th>
+              <th>Trạng thái</th>
+              <th>Hành động</th>
+            </tr>
+          </thead>
+          <tbody id="memberTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ELIGIBILITY CHECKER -->
+  <section id="checker" class="section">
+    <div class="page-hero">
+      <h1>Kiểm tra <span>Điều Kiện</span></h1>
+      <p>Tự kiểm tra xem bạn đã đủ điều kiện gia nhập Blue Legend Club chưa</p>
+    </div>
+
+    <div class="checker-grid">
+      <!-- Chính thức -->
+      <div class="checker-card">
+        <h3>🏆 Thành viên chính thức (L1 & TPKD)</h3>
+
+        <div class="check-toggle">
+          <input type="checkbox" id="c1" onchange="checkEligibility()">
+          <span>Doanh số cọc Top 1 của tháng</span>
+        </div>
+        <div class="check-toggle">
+          <input type="checkbox" id="c2" onchange="checkEligibility()">
+          <span>Đạt giải Best Blue Legend tháng/quý</span>
+        </div>
+        <div class="check-toggle">
+          <input type="checkbox" id="c3" onchange="checkEligibility()">
+          <span>Top 3 CVKD hoặc Top 3 TPKD doanh số năm 2025+</span>
+        </div>
+
+        <div id="officialResult" class="result-panel">
+          <div class="result-title cyan">✓ ĐỦ ĐIỀU KIỆN</div>
+          <div class="result-desc">Bạn đủ điều kiện trở thành <strong>Thành viên Chính thức</strong>. Liên hệ quản lý để hoàn thành thủ tục kết nạp.</div>
+          <div class="criteria-list" id="officialCriteriaList"></div>
+          <div style="margin-top:12px;padding:10px;background:rgba(239,68,68,0.08);border-radius:8px;border:1px solid rgba(239,68,68,0.2);">
+            <div style="font-size:12px;color:#f87171;">⚠ Lưu ý: 3 tháng không phát sinh giao dịch → chuyển về dự bị</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tiềm năng -->
+      <div class="checker-card">
+        <h3>⭐ Thành viên tiềm năng (L2 & L3)</h3>
+
+        <div class="form-row">
+          <label>Hiệu suất tháng gần nhất (%)</label>
+          <input type="number" id="perfInput" min="0" max="200" placeholder="Nhập % hiệu suất..." oninput="checkEligibility()">
+        </div>
+
+        <div class="check-toggle">
+          <input type="checkbox" id="p1" onchange="checkEligibility()">
+          <span>Thành viên mới BĐS ≤ 2 năm kinh nghiệm</span>
+        </div>
+        <div class="check-toggle">
+          <input type="checkbox" id="p2" onchange="checkEligibility()">
+          <span>Được xét đề xuất từ cấp quản lý</span>
+        </div>
+
+        <div id="potentialResult" class="result-panel">
+          <div class="result-title gold">⭐ ĐỦ ĐIỀU KIỆN TIỀM NĂNG</div>
+          <div class="result-desc">Bạn đủ điều kiện trở thành <strong>Thành viên Tiềm năng</strong>. Đây là bước đầu tiên trong hành trình Blue Legend.</div>
+          <div style="margin-top:12px;padding:10px;background:rgba(239,68,68,0.08);border-radius:8px;border:1px solid rgba(239,68,68,0.2);">
+            <div style="font-size:12px;color:#f87171;">⚠ Lưu ý: 6 tháng không phát sinh giao dịch → chuyển về dự bị</div>
+          </div>
+        </div>
+
+        <div id="notEligibleResult" class="result-panel not-eligible">
+          <div class="result-title red" style="display:none;"></div>
+          <div class="result-desc" id="notEligibleDesc"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Benefits preview if eligible -->
+    <div class="section-divider"></div>
+    <div style="text-align:center;padding:1rem 0;color:var(--text-muted);font-size:13px;">
+      ✦ Bấm vào tab <strong style="color:var(--cyan)">Quyền lợi</strong> để xem chi tiết các đặc quyền dành cho thành viên ✦
+    </div>
+  </section>
+
+  <!-- BENEFITS -->
+  <section id="benefits" class="section">
+    <div class="page-hero">
+      <h1>Quyền lợi <span>Thành Viên</span></h1>
+      <p>Toàn bộ đặc quyền dành cho thành viên Blue Legend Club</p>
+    </div>
+
+    <div style="display:flex;gap:10px;margin-bottom:1.5rem;flex-wrap:wrap;" id="benefitFilter">
+      <button class="btn-ghost" style="color:var(--cyan);border-color:rgba(0,195,255,0.4);" onclick="filterBenefits('all',this)">Tất cả</button>
+      <button class="btn-ghost" onclick="filterBenefits('official',this)">Chính thức</button>
+      <button class="btn-ghost" onclick="filterBenefits('potential',this)">Tiềm năng</button>
+    </div>
+
+    <div class="benefits-grid" id="benefitsGrid"></div>
+  </section>
+
+  <!-- LEADERBOARD -->
+  <section id="leaderboard" class="section">
+    <div class="page-hero">
+      <h1>Bảng xếp hạng <span>Blue Legend</span></h1>
+      <p>Hiệu suất & doanh số — cập nhật theo tháng</p>
+    </div>
+
+    <div style="display:flex;gap:10px;margin-bottom:1.5rem;flex-wrap:wrap;">
+      <button class="btn-ghost" style="color:var(--cyan);border-color:rgba(0,195,255,0.4);" onclick="setLbMode('performance',this)">Hiệu suất</button>
+      <button class="btn-ghost" onclick="setLbMode('transactions',this)">Giao dịch</button>
+    </div>
+
+    <div class="table-wrap">
+      <div class="table-toolbar">
+        <h2 id="lbTitle">Bảng xếp hạng theo Hiệu suất</h2>
+        <span style="font-size:12px;color:var(--text-muted);">Tháng 6 · 2026</span>
+      </div>
+      <div id="leaderboardList"></div>
+    </div>
+  </section>
+
+  <!-- ROADMAP -->
+  <section id="roadmap" class="section">
+    <div class="page-hero">
+      <h1>Lộ trình <span>Triển khai</span></h1>
+      <p>Kế hoạch ra mắt và vận hành Blue Legend Club</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">
+      <div>
+        <div class="table-wrap" style="padding:1.5rem;">
+          <h3 style="font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);margin-bottom:1.5rem;">Timeline chính thức</h3>
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-dot filled"></div>
+              <div class="timeline-date">Tuần 1 · Tháng 6</div>
+              <div class="timeline-title">Giai đoạn 1 — Chuẩn bị & Công bố</div>
+              <div class="timeline-desc">Xây dựng & phê duyệt quy chế CLB · Thiết kế bộ nhận diện (Logo, Vest, Huy hiệu, Giấy CN) · Lập danh sách thành viên sáng lập · Teaser nội bộ bí ẩn</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot gold"></div>
+              <div class="timeline-date">Tuần 2 · Tháng 6</div>
+              <div class="timeline-title">Giai đoạn 2 — Lễ Ra Mắt Chính Thức</div>
+              <div class="timeline-desc">Tổ chức buổi lễ hoành tráng · Trao Vest, Huy hiệu & Giấy chứng nhận · Chụp ảnh Profile chuyên nghiệp · Truyền thông rầm rộ (FB, Zalo, Web)</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-date">Tuần 3+</div>
+              <div class="timeline-title">Giai đoạn 3 — Vận hành & Kết nạp</div>
+              <div class="timeline-desc">Cập nhật danh sách thành viên hàng tháng · Liên hoan quý cùng BOD · Họp chiến lược & đào tạo nâng cao · Thanh lọc & xét kết nạp thành viên mới</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="table-wrap" style="padding:1.5rem;margin-bottom:1.5rem;">
+          <h3 style="font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);margin-bottom:1.5rem;">Kế hoạch truyền thông</h3>
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-dot filled"></div>
+              <div class="timeline-date">Pre-launch</div>
+              <div class="timeline-title">Teaser Nội bộ</div>
+              <div class="timeline-desc">Email blast + group Zalo/FB với thông điệp bí ẩn: <em>"Điều gì đó đặc biệt đang đến..."</em></div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot gold"></div>
+              <div class="timeline-date">Launch day</div>
+              <div class="timeline-title">Lễ Ra Mắt & Livestream</div>
+              <div class="timeline-desc">Event hoành tráng · Livestream · Trao Vest & Huy hiệu · Chụp ảnh chuyên nghiệp từng thành viên</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-date">Ongoing</div>
+              <div class="timeline-title">Content Marketing</div>
+              <div class="timeline-desc">Series "Hành trình đến Blue Legend" · Story thành viên · KPI minh bạch hàng tháng · Vinh danh định kỳ</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="table-wrap" style="padding:1.5rem;">
+          <h3 style="font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);margin-bottom:1rem;">Mục tiêu thành lập</h3>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text-main);">
+              <span style="color:var(--cyan);font-size:16px;">◆</span> Tạo "hệ sinh thái tinh hoa" trong hệ thống sales BHS
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text-main);">
+              <span style="color:var(--gold);font-size:16px;">◆</span> Kích thích cạnh tranh tích cực, nâng cao hiệu suất
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text-main);">
+              <span style="color:var(--cyan);font-size:16px;">◆</span> Xây dựng hình mẫu để toàn hệ thống noi theo
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text-main);">
+              <span style="color:var(--gold);font-size:16px;">◆</span> Giữ chân & phát triển nhân sự xuất sắc
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text-main);">
+              <span style="color:var(--cyan);font-size:16px;">◆</span> Tạo pipeline đội ngũ quản lý tương lai
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ADD MEMBER MODAL -->
+<div class="modal-overlay" id="addModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Thêm thành viên mới</h3>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-row">
+        <label>Họ & tên *</label>
+        <input type="text" id="newName" placeholder="Nguyễn Văn A">
+      </div>
+      <div class="form-row">
+        <label>Mã nhân viên</label>
+        <input type="text" id="newId" placeholder="BHS-0001">
+      </div>
+      <div class="form-row">
+        <label>Phòng / Bộ phận</label>
+        <input type="text" id="newDept" placeholder="Phòng Kinh doanh 1">
+      </div>
+      <div class="form-row">
+        <label>Cấp bậc</label>
+        <select id="newTier">
+          <option value="official">Chính thức (L1 & TPKD)</option>
+          <option value="potential">Tiềm năng (L2 & L3)</option>
+          <option value="reserve">Dự bị</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label>Hiệu suất (%)</label>
+        <input type="number" id="newPerf" placeholder="95" min="0" max="200">
+      </div>
+      <div class="form-row">
+        <label>Số giao dịch năm nay</label>
+        <input type="number" id="newTx" placeholder="12" min="0">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ghost" onclick="closeModal()">Huỷ</button>
+      <button class="btn-primary" onclick="addMember()">Thêm thành viên</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ===================== DATA =====================
+let members = [
+  { id:'BHS-001', name:'Trần Minh Khoa', dept:'Phòng KD 1', tier:'official', perf:145, transactions:18, lastDeal:'2026-05-28', joinDate:'2025-03-01' },
+  { id:'BHS-002', name:'Nguyễn Thu Hà', dept:'Phòng KD 2', tier:'official', perf:138, transactions:15, lastDeal:'2026-06-01', joinDate:'2025-01-15' },
+  { id:'BHS-003', name:'Lê Hoàng Nam', dept:'Phòng KD 1', tier:'official', perf:122, transactions:14, lastDeal:'2026-05-20', joinDate:'2025-04-10' },
+  { id:'BHS-004', name:'Phạm Thị Lan', dept:'Phòng KD 3', tier:'potential', perf:98, transactions:8, lastDeal:'2026-05-15', joinDate:'2025-08-01' },
+  { id:'BHS-005', name:'Vũ Đức Anh', dept:'Phòng KD 2', tier:'potential', perf:92, transactions:9, lastDeal:'2026-04-10', joinDate:'2025-09-15' },
+  { id:'BHS-006', name:'Đỗ Thị Mai', dept:'Phòng KD 4', tier:'potential', perf:88, transactions:7, lastDeal:'2026-05-25', joinDate:'2025-11-01' },
+  { id:'BHS-007', name:'Hoàng Văn Tuấn', dept:'Phòng KD 3', tier:'reserve', perf:65, transactions:3, lastDeal:'2026-02-20', joinDate:'2024-06-01' },
+  { id:'BHS-008', name:'Bùi Thanh Tùng', dept:'Phòng KD 1', tier:'reserve', perf:72, transactions:2, lastDeal:'2026-01-30', joinDate:'2024-09-01' },
+];
+
+const BENEFITS = [
+  { icon:'👔', title:'Vest & Huy hiệu', desc:'Vest xanh than BHS 100% (chính thức) / 70% (tiềm năng). Huy hiệu CLB trao tại lễ ra mắt.', tier:'both', gold:false },
+  { icon:'💰', title:'Ưu đãi cơ chế', desc:'MKT +10% (chính thức) / MKT +5% (tiềm năng) so với cơ chế thường. Xuất trình giấy chứng nhận khi xét duyệt.', tier:'both', gold:true },
+  { icon:'🎉', title:'Liên hoan định kỳ', desc:'Tiệc liên hoan & gặp gỡ BOD mỗi quý. CQL & TLKD có thành viên CLB được tham dự cùng.', tier:'both', gold:false },
+  { icon:'🎯', title:'Họp chiến lược', desc:'Tham gia các cuộc họp chiến lược cấp Công ty. Tiếp cận thông tin & định hướng từ BOD.', tier:'official', gold:false },
+  { icon:'📚', title:'Đào tạo & Coaching', desc:'Ưu đãi +10% khoá đào tạo thuê ngoài. Được mời làm Giảng viên CLB Coach Hub đứng lớp chia sẻ.', tier:'both', gold:false },
+  { icon:'📸', title:'Thương hiệu cá nhân', desc:'Chụp ảnh Profile chuyên nghiệp. Được dùng hình ảnh làm thương hiệu Công ty. Chứng nhận thành viên CLB.', tier:'both', gold:false },
+  { icon:'📊', title:'Cấp data từ Digital', desc:'Được ưu tiên cấp data khách hàng từ bộ phận Digital Marketing. Dữ liệu chất lượng cao, được phân loại theo phân khúc.', tier:'official', gold:true },
+  { icon:'🏢', title:'Cơ hội đầu tư sản phẩm Tập đoàn', desc:'Được ưu tiên tham gia đầu tư vào các sản phẩm bất động sản của Tập đoàn với điều kiện ưu đãi đặc biệt.', tier:'official', gold:true },
+  { icon:'🕒', title:'Cơ hội miễn chấm công', desc:'Thành viên đạt thành tích xuất sắc có cơ hội được xét miễn chấm công theo chính sách linh hoạt của Công ty.', tier:'official', gold:true },
+];
+
+let lbMode = 'performance';
+
+// ===================== INIT =====================
+window.onload = () => {
+  renderDashboard();
+  renderMembers();
+  renderBenefits('all');
+  renderLeaderboard();
+};
+
+// ===================== TABS =====================
+function switchTab(tab) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById(tab).classList.add('active');
+  const idx = ['dashboard','members','checker','benefits','leaderboard','roadmap'].indexOf(tab);
+  document.querySelectorAll('nav button')[idx].classList.add('active');
+}
+
+// ===================== DASHBOARD =====================
+function renderDashboard() {
+  const official = members.filter(m => m.tier === 'official');
+  const potential = members.filter(m => m.tier === 'potential');
+  const reserve = members.filter(m => m.tier === 'reserve');
+
+  document.getElementById('statTotal').textContent = members.length;
+  document.getElementById('statOfficial').textContent = official.length;
+  document.getElementById('statPotential').textContent = potential.length;
+  document.getElementById('statReserve').textContent = reserve.length;
+
+  // Top performers
+  const sorted = [...members].sort((a,b) => b.perf - a.perf).slice(0,5);
+  const tp = document.getElementById('topPerformersContainer');
+  tp.innerHTML = sorted.map((m,i) => `
+    <div class="leaderboard-row">
+      <div class="${['rank-1','rank-2','rank-3','rank-n','rank-n'][i] || 'rank-n'} rank-badge">${i+1}</div>
+      <div class="lb-avatar">${m.name.split(' ').slice(-1)[0][0]}${m.name.split(' ')[0][0]}</div>
+      <div class="lb-info">
+        <div class="lb-name">${m.name}</div>
+        <div class="lb-dept">${m.dept}</div>
+      </div>
+      <div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:800;color:${m.perf>=100?'var(--cyan)':'var(--gold)'};">${m.perf}%</div>
+        <div style="font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;">Hiệu suất</div>
+      </div>
+    </div>
+  `).join('');
+
+  // Activity
+  const activities = [
+    { date:'09/06/2026', title:'Trần Minh Khoa đạt giao dịch mới', desc:'Giao dịch #TK-2026-189 được xác nhận', type:'cyan' },
+    { date:'07/06/2026', title:'Kết nạp thành viên mới', desc:'Đỗ Thị Mai gia nhập nhóm Tiềm năng', type:'gold' },
+    { date:'05/06/2026', title:'Họp chiến lược Q2/2026', desc:'10 thành viên chính thức tham dự', type:'cyan' },
+    { date:'01/06/2026', title:'Cập nhật bảng xếp hạng tháng 6', desc:'Dữ liệu hiệu suất đã được cập nhật', type:'gold' },
+  ];
+
+  document.getElementById('activityTimeline').innerHTML = activities.map(a => `
+    <div class="timeline-item">
+      <div class="timeline-dot ${a.type === 'gold' ? 'gold' : 'filled'}"></div>
+      <div class="timeline-date">${a.date}</div>
+      <div class="timeline-title">${a.title}</div>
+      <div class="timeline-desc">${a.desc}</div>
+    </div>
+  `).join('');
+
+  // Warnings
+  const today = new Date('2026-06-09');
+  const warnings = members.filter(m => {
+    const last = new Date(m.lastDeal);
+    const daysDiff = Math.floor((today - last) / (1000*60*60*24));
+    const limit = m.tier === 'official' ? 60 : 120;
+    return daysDiff > limit * 0.7;
+  });
+
+  const wc = document.getElementById('warningContainer');
+  if (warnings.length === 0) {
+    wc.innerHTML = '<div class="empty-state"><div class="empty-icon">✓</div><p>Không có thành viên nào gần hạn cảnh báo</p></div>';
+  } else {
+    wc.innerHTML = `<div style="overflow-x:auto;"><table><thead><tr><th>Thành viên</th><th>Cấp bậc</th><th>Giao dịch cuối</th><th>Ngày còn lại</th></tr></thead><tbody>${
+      warnings.map(m => {
+        const last = new Date(m.lastDeal);
+        const daysDiff = Math.floor((today - last) / (1000*60*60*24));
+        const limit = m.tier === 'official' ? 90 : 180;
+        const remaining = limit - daysDiff;
+        return `<tr><td><div class="member-name">${m.name}</div><div class="member-id">${m.id}</div></td><td>${tierBadge(m.tier)}</td><td>${m.lastDeal}</td><td><span class="badge badge-warning">⚠ ${remaining} ngày</span></td></tr>`;
+      }).join('')
+    }</tbody></table></div>`;
+  }
+}
+
+// ===================== MEMBERS =====================
+function tierBadge(tier) {
+  if (tier === 'official') return '<span class="badge badge-official">Chính thức</span>';
+  if (tier === 'potential') return '<span class="badge badge-potential">Tiềm năng</span>';
+  return '<span class="badge badge-reserve">Dự bị</span>';
+}
+
+function renderMembers(list) {
+  const data = list || members;
+  const body = document.getElementById('memberTableBody');
+  if (data.length === 0) {
+    body.innerHTML = '<tr><td colspan="6"><div class="empty-state"><p>Không tìm thấy thành viên nào</p></div></td></tr>';
+    return;
+  }
+  const today = new Date('2026-06-09');
+  body.innerHTML = data.map(m => {
+    const last = new Date(m.lastDeal);
+    const days = Math.floor((today - last) / (1000*60*60*24));
+    const limit = m.tier === 'official' ? 90 : 180;
+    const statusBadge = days > limit ? '<span class="badge badge-reserve">Sắp DỰ BỊ</span>' : '<span class="badge badge-active">Hoạt động</span>';
+    const perfColor = m.perf >= 100 ? 'var(--cyan)' : m.perf >= 80 ? 'var(--gold)' : 'var(--danger)';
+    return `
+      <tr>
+        <td>
+          <div class="member-name">${m.name}</div>
+          <div class="member-id">${m.id} · ${m.dept}</div>
+        </td>
+        <td>${tierBadge(m.tier)}</td>
+        <td>
+          <div class="progress-wrap">
+            <div class="progress-bar">
+              <div class="progress-fill ${m.perf<80?'':''}'" style="width:${Math.min(m.perf,200)/2}%;background:${perfColor};"></div>
+            </div>
+            <span class="progress-pct" style="color:${perfColor};">${m.perf}%</span>
+          </div>
+        </td>
+        <td style="font-size:13px;color:var(--text-muted);">${m.lastDeal} <br><span style="font-size:11px;">${days} ngày trước</span></td>
+        <td>${statusBadge}</td>
+        <td>
+          <button class="btn-ghost" style="padding:4px 10px;font-size:11px;" onclick="removeMember('${m.id}')">Xoá</button>
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
+
+function filterMembers() {
+  const q = document.getElementById('memberSearch').value.toLowerCase();
+  const tier = document.getElementById('tierFilter').value;
+  const filtered = members.filter(m => {
+    const matchQ = m.name.toLowerCase().includes(q) || m.id.toLowerCase().includes(q);
+    const matchTier = !tier || m.tier === tier;
+    return matchQ && matchTier;
+  });
+  renderMembers(filtered);
+}
+
+function removeMember(id) {
+  members = members.filter(m => m.id !== id);
+  renderMembers();
+  renderDashboard();
+  renderLeaderboard();
+  showToast('Đã xoá thành viên khỏi danh sách');
+}
+
+// ===================== ADD MODAL =====================
+function openAddModal() { document.getElementById('addModal').classList.add('open'); }
+function closeModal() { document.getElementById('addModal').classList.remove('open'); }
+
+function addMember() {
+  const name = document.getElementById('newName').value.trim();
+  if (!name) { showToast('Vui lòng nhập họ tên thành viên'); return; }
+  const newMember = {
+    id: document.getElementById('newId').value || `BHS-${String(members.length+1).padStart(3,'0')}`,
+    name,
+    dept: document.getElementById('newDept').value || 'BHS Property',
+    tier: document.getElementById('newTier').value,
+    perf: parseInt(document.getElementById('newPerf').value) || 80,
+    transactions: parseInt(document.getElementById('newTx').value) || 0,
+    lastDeal: new Date().toISOString().split('T')[0],
+    joinDate: new Date().toISOString().split('T')[0],
+  };
+  members.push(newMember);
+  closeModal();
+  renderMembers();
+  renderDashboard();
+  renderLeaderboard();
+  showToast(`✓ Đã thêm thành viên: ${name}`);
+  ['newName','newId','newDept','newPerf','newTx'].forEach(id => document.getElementById(id).value = '');
+}
+
+// ===================== ELIGIBILITY =====================
+function checkEligibility() {
+  const c1 = document.getElementById('c1').checked;
+  const c2 = document.getElementById('c2').checked;
+  const c3 = document.getElementById('c3').checked;
+  const perf = parseInt(document.getElementById('perfInput').value) || 0;
+  const p1 = document.getElementById('p1').checked;
+  const p2 = document.getElementById('p2').checked;
+
+  const offPanel = document.getElementById('officialResult');
+  const potPanel = document.getElementById('potentialResult');
+  const notPanel = document.getElementById('notEligibleResult');
+
+  const officialOk = c1 || c2 || c3;
+  const potentialOk = perf >= 80 || p1 || p2;
+
+  offPanel.classList.remove('show','eligible');
+  potPanel.classList.remove('show','eligible-gold');
+  notPanel.classList.remove('show');
+
+  if (officialOk) {
+    offPanel.classList.add('show','eligible');
+  } else if (potentialOk) {
+    potPanel.classList.add('show','eligible-gold');
+  } else if (c1!==undefined && (perf > 0 || p1 || p2)) {
+    const d = document.getElementById('notEligibleDesc');
+    d.textContent = perf > 0 && perf < 80
+      ? `Hiệu suất của bạn (${perf}%) chưa đạt ngưỡng tối thiểu 80%. Hãy cố gắng nâng cao hiệu suất trong các tháng tới.`
+      : 'Bạn chưa đáp ứng đủ điều kiện. Hãy tích lũy thêm thành tích và trao đổi với quản lý để được đề xuất.';
+    notPanel.classList.add('show');
+  }
+}
+
+// ===================== BENEFITS =====================
+function renderBenefits(filter) {
+  const list = filter === 'all' ? BENEFITS :
+    filter === 'official' ? BENEFITS.filter(b => b.tier === 'official' || b.tier === 'both') :
+    BENEFITS.filter(b => b.tier === 'potential' || b.tier === 'both');
+
+  document.getElementById('benefitsGrid').innerHTML = list.map(b => `
+    <div class="benefit-card ${b.gold ? 'gold-accent' : ''}">
+      <div class="benefit-icon ${b.gold ? 'gold-icon' : ''}" style="${b.gold ? 'font-size:20px;' : ''}">${b.icon}</div>
+      <div class="benefit-content">
+        <h4>${b.title}</h4>
+        <p>${b.desc}</p>
+        <div>
+          <span class="tier-label ${b.tier === 'both' ? 'tier-both' : b.tier === 'official' ? 'tier-official' : 'tier-potential'}">
+            ${b.tier === 'both' ? 'Tất cả thành viên' : b.tier === 'official' ? 'Chính thức' : 'Tiềm năng'}
+          </span>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterBenefits(filter, btn) {
+  document.querySelectorAll('#benefitFilter button').forEach(b => {
+    b.style.color = '';
+    b.style.borderColor = '';
+  });
+  btn.style.color = 'var(--cyan)';
+  btn.style.borderColor = 'rgba(0,195,255,0.4)';
+  renderBenefits(filter);
+}
+
+// ===================== LEADERBOARD =====================
+function setLbMode(mode, btn) {
+  lbMode = mode;
+  document.querySelectorAll('#leaderboard .btn-ghost').forEach(b => {
+    b.style.color = '';
+    b.style.borderColor = '';
+  });
+  btn.style.color = 'var(--cyan)';
+  btn.style.borderColor = 'rgba(0,195,255,0.4)';
+  document.getElementById('lbTitle').textContent = `Bảng xếp hạng theo ${mode === 'performance' ? 'Hiệu suất' : 'Số giao dịch'}`;
+  renderLeaderboard();
+}
+
+function renderLeaderboard() {
+  const sorted = [...members].sort((a,b) => lbMode === 'performance' ? b.perf - a.perf : b.transactions - a.transactions);
+  const container = document.getElementById('leaderboardList');
+  container.innerHTML = sorted.map((m,i) => {
+    const rankClass = i===0?'rank-1':i===1?'rank-2':i===2?'rank-3':'rank-n';
+    const val = lbMode === 'performance' ? m.perf+'%' : m.transactions+' GD';
+    const lbl = lbMode === 'performance' ? 'HIỆU SUẤT' : 'GIAO DỊCH';
+    const valColor = lbMode === 'performance' ? (m.perf>=100?'var(--cyan)':'var(--gold)') : 'var(--cyan)';
+    return `
+      <div class="leaderboard-row">
+        <div class="${rankClass} rank-badge">${i+1}</div>
+        <div class="lb-avatar">${m.name.split(' ').slice(-1)[0][0]}${m.name.split(' ')[0][0]}</div>
+        <div class="lb-info">
+          <div class="lb-name">${m.name}</div>
+          <div class="lb-dept">${m.id} · ${m.dept}</div>
+        </div>
+        ${tierBadge(m.tier)}
+        <div class="lb-score" style="color:${valColor};">${val}<small>${lbl}</small></div>
+      </div>
+    `;
+  }).join('');
+}
+
+// ===================== TOAST =====================
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+</script>
+</body>
+</html>
